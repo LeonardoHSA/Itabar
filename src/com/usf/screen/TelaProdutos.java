@@ -15,6 +15,7 @@ public class TelaProdutos extends JFrame {
     private JPanel produtosScreen;
     private JButton botaoVoltarTelaInicial;
     private JTextField textField1;
+    private JButton pesquisarButton;
 
     public TelaProdutos(String title){
 
@@ -31,6 +32,12 @@ public class TelaProdutos extends JFrame {
                 JFrame frame = new MainScreen("Tela inicial");
                 frame.setVisible(true);
                 dispose();
+            }
+        });
+        pesquisarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
             }
         });
     }
