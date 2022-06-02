@@ -16,6 +16,8 @@ public class TelaProdutos extends JFrame {
     private JButton botaoVoltarTelaInicial;
     private JTextField textField1;
     private JButton pesquisarButton;
+    private JButton botaoDeleta;
+    private JTextField idProdutoTextFiel;
 
     public TelaProdutos(String title){
 
@@ -37,7 +39,25 @@ public class TelaProdutos extends JFrame {
         pesquisarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                
+
+            }
+        });
+        botaoDeleta.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                int idProduto;
+
+                idProduto = Integer.parseInt(idProdutoTextFiel.getText());
+
+                deletaProduto(idProduto);
+
+                DefaultTableModel modelo = (DefaultTableModel) tabelaProdutos.getModel();
+                modelo.setNumRows(0);
+                modelo.setColumnCount(0);
+
+                carregaTabela();
+
             }
         });
     }
@@ -76,6 +96,24 @@ public class TelaProdutos extends JFrame {
         } catch(Exception ErroSql){
             JOptionPane.showMessageDialog(null, "Erro ao carregar a tabela de dados" + ErroSql,
                     "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void deletaProduto(int idProduto){
+        try{
+            Connection con = ConnectionFactory.conecta();
+            PreparedStatement pstm;
+
+
+            pstm = con.prepareStatement("delete from public.Produto where idProduto = ?");
+            pstm.setInt(1, idProduto);
+            pstm.executeQuery();
+
+
+
+            ConnectionFactory.closeConnection(con, pstm);
+        } catch(Exception ErroSql){
+
         }
     }
 }
